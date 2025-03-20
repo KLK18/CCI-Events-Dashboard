@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCI Events Dashboard</title>
+    <title>CCI Events Dashboard - Integrated View</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,61 +72,6 @@
             height: 300px;
             position: relative;
         }
-        .bar-chart {
-            display: flex;
-            height: 250px;
-            align-items: flex-end;
-            padding-top: 20px;
-        }
-        .bar {
-            flex: 1;
-            margin: 0 10px;
-            transition: height 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-        .bar-value {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .bar-fill {
-            width: 100%;
-            border-radius: 4px 4px 0 0;
-        }
-        .bar-label {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 14px;
-        }
-        .rep-bar-chart {
-            display: flex;
-            height: 30px;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-        .rep-name {
-            width: 80px;
-            font-weight: bold;
-        }
-        .rep-bar-container {
-            flex: 1;
-            height: 100%;
-            display: flex;
-        }
-        .rep-bar-fill {
-            height: 100%;
-        }
-        .rep-bar-value {
-            margin-left: 10px;
-            font-weight: bold;
-        }
-        .chart-legend {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
         .legend-item {
             display: flex;
             align-items: center;
@@ -137,6 +82,119 @@
             height: 15px;
             margin-right: 5px;
             border-radius: 3px;
+        }
+        /* New integrated chart styles */
+        .integrated-stage-container {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .stage-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .stage-title {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .stage-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .stage-arr {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .deal-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .deal-card {
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            transition: transform 0.2s;
+        }
+        .deal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .company-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .deal-name {
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .deal-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .rep-name {
+            color: #555;
+        }
+        .deal-arr {
+            font-weight: bold;
+        }
+        .qualified-bg {
+            background-color: #f0f0ff;
+        }
+        .qualified-color {
+            background-color: #8884d8;
+        }
+        .scoped-bg {
+            background-color: #f0fff0;
+        }
+        .scoped-color {
+            background-color: #4CAF50;
+        }
+        .proposal-bg {
+            background-color: #e6f7ff;
+        }
+        .proposal-color {
+            background-color: #2196F3;
+        }
+        .closed-bg {
+            background-color: #fffbf0;
+        }
+        .closed-color {
+            background-color: #FFC107;
+        }
+        .progress-container {
+            height: 30px;
+            background-color: #f1f1f1;
+            border-radius: 15px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: flex;
+        }
+        .progress-bar {
+            height: 100%;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s;
         }
     </style>
 </head>
@@ -149,6 +207,14 @@
                 <h2>Event Summary</h2>
                 <p><strong>Total ARR:</strong> $400,322.40</p>
                 
+                <!-- Visual progress bar showing ARR distribution -->
+                <div class="progress-container">
+                    <div class="progress-bar qualified-color" style="width: 27%;" title="Qualified: $108,287.88">27%</div>
+                    <div class="progress-bar scoped-color" style="width: 69%;" title="Scoped: $277,178.52">69%</div>
+                    <div class="progress-bar proposal-color" style="width: 3%;" title="Initial Proposal: $11,856.00">3%</div>
+                    <div class="progress-bar closed-color" style="width: 1%;" title="Won/Closed: $3,000.00">1%</div>
+                </div>
+                
                 <h3>ARR by Stage:</h3>
                 <p><span style="color: #8884d8;">• Qualified:</span> $108,287.88</p>
                 <p><span style="color: #4CAF50;">• Scoped:</span> $277,178.52</p>
@@ -157,236 +223,195 @@
             </div>
             
             <div class="card chart-card">
-                <h2>ARR by Sales Stage</h2>
-                <div class="chart-container">
-                    <div class="bar-chart">
-                        <div class="bar" onclick="showStageDeals('Qualified')">
-                            <div class="bar-value">$108k</div>
-                            <div class="bar-fill" style="height: 27%; background-color: #8884d8;"></div>
-                            <div class="bar-label">Qualified</div>
+                <h2>ARR by Sales Rep</h2>
+                
+                <!-- Rep performance visualization -->
+                <div style="margin-top: 20px;">
+                    <!-- JR -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <div><strong>JR</strong></div>
+                            <div><strong>$113,543.88</strong></div>
                         </div>
-                        <div class="bar" onclick="showStageDeals('Scoped')">
-                            <div class="bar-value">$277k</div>
-                            <div class="bar-fill" style="height: 69%; background-color: #4CAF50;"></div>
-                            <div class="bar-label">Scoped</div>
+                        <div style="height: 25px; background-color: #f1f1f1; border-radius: 4px; overflow: hidden; display: flex;">
+                            <div style="width: 87%; background-color: #8884d8;" title="Qualified: $98,687.88"></div>
+                            <div style="width: 10%; background-color: #2196F3;" title="Initial Proposal: $11,856.00"></div>
+                            <div style="width: 3%; background-color: #FFC107;" title="Won/Closed: $3,000.00"></div>
                         </div>
-                        <div class="bar" onclick="showStageDeals('Initial Proposal Presented')">
-                            <div class="bar-value">$12k</div>
-                            <div class="bar-fill" style="height: 3%; background-color: #2196F3;"></div>
-                            <div class="bar-label">Initial Proposal</div>
+                    </div>
+                    
+                    <!-- GA -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <div><strong>GA</strong></div>
+                            <div><strong>$277,178.52</strong></div>
                         </div>
-                        <div class="bar" onclick="showStageDeals('Won/Closed')">
-                            <div class="bar-value">$3k</div>
-                            <div class="bar-fill" style="height: 1%; background-color: #FFC107;"></div>
-                            <div class="bar-label">Won/Closed</div>
+                        <div style="height: 25px; background-color: #f1f1f1; border-radius: 4px; overflow: hidden; display: flex;">
+                            <div style="width: 100%; background-color: #4CAF50;" title="Scoped: $277,178.52"></div>
                         </div>
+                    </div>
+                    
+                    <!-- JC -->
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <div><strong>JC</strong></div>
+                            <div><strong>$9,600.00</strong></div>
+                        </div>
+                        <div style="height: 25px; background-color: #f1f1f1; border-radius: 4px; overflow: hidden; display: flex;">
+                            <div style="width: 100%; background-color: #8884d8;" title="Qualified: $9,600.00"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #8884d8;"></div>
+                        <div>Qualified</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #4CAF50;"></div>
+                        <div>Scoped</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2196F3;"></div>
+                        <div>Initial Proposal</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FFC107;"></div>
+                        <div>Won/Closed</div>
                     </div>
                 </div>
             </div>
         </div>
         
+        <!-- Integrated view of ARR by stage with company and deal info -->
         <div class="card full-width-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>Deals by Stage</h2>
-                <div>
-                    <button class="stage-btn active" onclick="showStageDeals('Qualified')">Qualified</button>
-                    <button class="stage-btn" onclick="showStageDeals('Scoped')">Scoped</button>
-                    <button class="stage-btn" onclick="showStageDeals('Initial Proposal Presented')">Initial Proposal</button>
-                    <button class="stage-btn" onclick="showStageDeals('Won/Closed')">Won/Closed</button>
-                </div>
-            </div>
+            <h2>Integrated ARR by Stage with Deals</h2>
             
-            <div id="qualified-deals" class="deals-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Deal</th>
-                            <th>Rep</th>
-                            <th class="text-right">ARR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Scarborough Public Library</td>
-                            <td>Elevate</td>
-                            <td>JR</td>
-                            <td class="text-right">$3,167.88</td>
-                        </tr>
-                        <tr>
-                            <td>Jobs For Maine Graduates</td>
-                            <td>Elevate</td>
-                            <td>JR</td>
-                            <td class="text-right">$95,520.00</td>
-                        </tr>
-                        <tr>
-                            <td>The Boulos Company</td>
-                            <td>Elevate</td>
-                            <td>JC</td>
-                            <td class="text-right">$9,600.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div id="scoped-deals" class="deals-table" style="display: none;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Deal</th>
-                            <th>Rep</th>
-                            <th class="text-right">ARR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Littleton Coin</td>
-                            <td>Elevate</td>
-                            <td>GA</td>
-                            <td class="text-right">$145,400.64</td>
-                        </tr>
-                        <tr>
-                            <td>Stonewall Kitchen</td>
-                            <td>Elevate</td>
-                            <td>GA</td>
-                            <td class="text-right">$131,777.88</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div id="initial-proposal-presented-deals" class="deals-table" style="display: none;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Deal</th>
-                            <th>Rep</th>
-                            <th class="text-right">ARR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Howell Laboratories</td>
-                            <td>Elevate</td>
-                            <td>JR</td>
-                            <td class="text-right">$11,856.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div id="won-closed-deals" class="deals-table" style="display: none;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Deal</th>
-                            <th>Rep</th>
-                            <th class="text-right">ARR</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Downeast Federal Credit Union</td>
-                            <td>NES</td>
-                            <td>JR</td>
-                            <td class="text-right">$3,000.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <div class="card full-width-card">
-            <h2>ARR by Sales Rep and Stage</h2>
-            
-            <div style="margin-top: 20px;">
-                <!-- JR -->
-                <div class="rep-bar-chart">
-                    <div class="rep-name">JR</div>
-                    <div class="rep-bar-container">
-                        <div class="rep-bar-fill" style="width: 26%; background-color: #8884d8;" title="Qualified: $98,687.88"></div>
-                        <div class="rep-bar-fill" style="width: 3%; background-color: #2196F3;" title="Initial Proposal: $11,856.00"></div>
-                        <div class="rep-bar-fill" style="width: 1%; background-color: #FFC107;" title="Won/Closed: $3,000.00"></div>
+            <!-- QUALIFIED STAGE -->
+            <div class="integrated-stage-container">
+                <div class="stage-block qualified-bg">
+                    <div class="stage-header">
+                        <div class="stage-title">
+                            <span class="stage-icon qualified-color"></span>
+                            Qualified Stage
+                        </div>
+                        <div class="stage-arr">$108,287.88</div>
                     </div>
-                    <div class="rep-bar-value">$113,543.88</div>
+                    
+                    <div class="deal-cards">
+                        <!-- Qualified Deal 1 -->
+                        <div class="deal-card">
+                            <div class="company-name">Scarborough Public Library</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: JR</span>
+                                <span class="deal-arr">$3,167.88</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Qualified Deal 2 -->
+                        <div class="deal-card">
+                            <div class="company-name">Jobs For Maine Graduates</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: JR</span>
+                                <span class="deal-arr">$95,520.00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Qualified Deal 3 -->
+                        <div class="deal-card">
+                            <div class="company-name">The Boulos Company</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: JC</span>
+                                <span class="deal-arr">$9,600.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- GA -->
-                <div class="rep-bar-chart">
-                    <div class="rep-name">GA</div>
-                    <div class="rep-bar-container">
-                        <div class="rep-bar-fill" style="width: 69%; background-color: #4CAF50;" title="Scoped: $277,178.52"></div>
+                <!-- SCOPED STAGE -->
+                <div class="stage-block scoped-bg">
+                    <div class="stage-header">
+                        <div class="stage-title">
+                            <span class="stage-icon scoped-color"></span>
+                            Scoped Stage
+                        </div>
+                        <div class="stage-arr">$277,178.52</div>
                     </div>
-                    <div class="rep-bar-value">$277,178.52</div>
+                    
+                    <div class="deal-cards">
+                        <!-- Scoped Deal 1 -->
+                        <div class="deal-card">
+                            <div class="company-name">Littleton Coin</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: GA</span>
+                                <span class="deal-arr">$145,400.64</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Scoped Deal 2 -->
+                        <div class="deal-card">
+                            <div class="company-name">Stonewall Kitchen</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: GA</span>
+                                <span class="deal-arr">$131,777.88</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- JC -->
-                <div class="rep-bar-chart">
-                    <div class="rep-name">JC</div>
-                    <div class="rep-bar-container">
-                        <div class="rep-bar-fill" style="width: 2.4%; background-color: #8884d8;" title="Qualified: $9,600.00"></div>
+                <!-- INITIAL PROPOSAL STAGE -->
+                <div class="stage-block proposal-bg">
+                    <div class="stage-header">
+                        <div class="stage-title">
+                            <span class="stage-icon proposal-color"></span>
+                            Initial Proposal Presented Stage
+                        </div>
+                        <div class="stage-arr">$11,856.00</div>
                     </div>
-                    <div class="rep-bar-value">$9,600.00</div>
+                    
+                    <div class="deal-cards">
+                        <!-- Initial Proposal Deal 1 -->
+                        <div class="deal-card">
+                            <div class="company-name">Howell Laboratories</div>
+                            <div class="deal-name">Elevate</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: JR</span>
+                                <span class="deal-arr">$11,856.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #8884d8;"></div>
-                    <div>Qualified</div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #4CAF50;"></div>
-                    <div>Scoped</div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #2196F3;"></div>
-                    <div>Initial Proposal</div>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #FFC107;"></div>
-                    <div>Won/Closed</div>
+                
+                <!-- WON/CLOSED STAGE -->
+                <div class="stage-block closed-bg">
+                    <div class="stage-header">
+                        <div class="stage-title">
+                            <span class="stage-icon closed-color"></span>
+                            Won/Closed Stage
+                        </div>
+                        <div class="stage-arr">$3,000.00</div>
+                    </div>
+                    
+                    <div class="deal-cards">
+                        <!-- Won/Closed Deal 1 -->
+                        <div class="deal-card">
+                            <div class="company-name">Downeast Federal Credit Union</div>
+                            <div class="deal-name">NES</div>
+                            <div class="deal-info">
+                                <span class="rep-name">Rep: JR</span>
+                                <span class="deal-arr">$3,000.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function showStageDeals(stage) {
-            // Hide all deals tables
-            document.getElementById('qualified-deals').style.display = 'none';
-            document.getElementById('scoped-deals').style.display = 'none';
-            document.getElementById('initial-proposal-presented-deals').style.display = 'none';
-            document.getElementById('won-closed-deals').style.display = 'none';
-            
-            // Show the selected deals table
-            if (stage === 'Qualified') {
-                document.getElementById('qualified-deals').style.display = 'block';
-            } else if (stage === 'Scoped') {
-                document.getElementById('scoped-deals').style.display = 'block';
-            } else if (stage === 'Initial Proposal Presented') {
-                document.getElementById('initial-proposal-presented-deals').style.display = 'block';
-            } else if (stage === 'Won/Closed') {
-                document.getElementById('won-closed-deals').style.display = 'block';
-            }
-            
-            // Update active button
-            const buttons = document.querySelectorAll('.stage-btn');
-            buttons.forEach(button => {
-                if (button.innerText === 'Initial Proposal' && stage === 'Initial Proposal Presented') {
-                    button.classList.add('active');
-                } else if (button.innerText === 'Won/Closed' && stage === 'Won/Closed') {
-                    button.classList.add('active');
-                } else if (button.innerText === stage) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
-        }
-    </script>
 </body>
 </html>

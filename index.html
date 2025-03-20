@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCI Events Dashboard - Integrated View</title>
+    <title>CCI Events Dashboard with ROI Analysis</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -83,7 +83,7 @@
             margin-right: 5px;
             border-radius: 3px;
         }
-        /* New integrated chart styles */
+        /* Integrated chart styles */
         .integrated-stage-container {
             margin-top: 20px;
             width: 100%;
@@ -196,16 +196,126 @@
             font-weight: bold;
             transition: width 0.5s;
         }
+        /* ROI Gauge styles */
+        .roi-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .roi-gauge {
+            width: 48%;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .gauge-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .gauge-value {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .gauge-progress {
+            height: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .gauge-fill {
+            height: 100%;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s;
+        }
+        .target-indicator {
+            position: relative;
+            height: 20px;
+            margin: 5px 0;
+        }
+        .target-line {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #FF5722;
+        }
+        .target-label {
+            position: absolute;
+            top: -20px;
+            transform: translateX(-50%);
+            color: #FF5722;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .great-roi {
+            background-color: #4CAF50;
+        }
+        .good-roi {
+            background-color: #8BC34A;
+        }
+        .medium-roi {
+            background-color: #FFC107;
+        }
+        .low-roi {
+            background-color: #FF9800;
+        }
+        .poor-roi {
+            background-color: #F44336;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>CCI Events ARR Dashboard</h1>
         
+        <!-- ROI Analysis Section -->
+        <div class="card full-width-card">
+            <h2>ROI Analysis</h2>
+            <div class="roi-container">
+                <!-- Closed/Won ROI Gauge -->
+                <div class="roi-gauge">
+                    <div class="gauge-title">Current ROI (Sold/Closed)</div>
+                    <div class="gauge-value">0.75% <span style="font-size: 16px;">of 20% Goal</span></div>
+                    <div class="gauge-progress">
+                        <div class="gauge-fill poor-roi" style="width: 3.75%;">0.75%</div>
+                    </div>
+                    <div class="target-indicator">
+                        <div class="target-line" style="left: 100%;"></div>
+                        <div class="target-label" style="left: 100%;">20% Goal</div>
+                    </div>
+                    <p style="text-align: center; margin-top: 15px;">Based on $3,000 in closed deals</p>
+                </div>
+                
+                <!-- Projected ROI Gauge (including all stages) -->
+                <div class="roi-gauge">
+                    <div class="gauge-title">Projected ROI (All Opportunities)</div>
+                    <div class="gauge-value">100.08% <span style="font-size: 16px;">of 20% Goal</span></div>
+                    <div class="gauge-progress">
+                        <div class="gauge-fill great-roi" style="width: 100%;">100.08%</div>
+                    </div>
+                    <div class="target-indicator">
+                        <div class="target-line" style="left: 20%;"></div>
+                        <div class="target-label" style="left: 20%;">20% Goal</div>
+                    </div>
+                    <p style="text-align: center; margin-top: 15px;">Based on $400,322.40 in all opportunities</p>
+                </div>
+            </div>
+        </div>
+        
         <div class="dashboard-grid">
             <div class="card summary-card">
                 <h2>Event Summary</h2>
                 <p><strong>Total ARR:</strong> $400,322.40</p>
+                <p><strong>Event Cost (Est.):</strong> $0</p>
                 
                 <!-- Visual progress bar showing ARR distribution -->
                 <div class="progress-container">
